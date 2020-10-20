@@ -23,7 +23,7 @@ obj.child.age=18 // 打印"oh,you1 change the value of child.age"
 ```
 解决方法：递归监听对象子属性即可
 ```js
-// index.js
+// compile.js
 function observe(data) {
     Object.keys(data).map(key=>{
         // value 作为 get,set 的闭包内变量。
@@ -144,6 +144,10 @@ console.log(obj.child.hobby.type)
 </script>
 ```
 
+#### 内存数据更新后渲染视图
+需求:
+1. 绑定 node 与 data 对应 key 
+2. 
 
 
 
