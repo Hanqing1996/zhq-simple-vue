@@ -144,17 +144,15 @@ console.log(obj.child.hobby.type)
 </script>
 ```
 
-#### 内存数据更新后渲染视图
+#### 内存数据（data[key]）更新后渲染视图
 需求:
-1. 绑定 node 与 data 对应 key 
-2. 
+1. 绑定 node 与对应 key,这样才知道 data[key] 变化后要更新哪个视图上的节点 
+2. 要求**对于不同的 data[key] 变化,触发不同的回调函数**，这意味着每个<node,key>要有自己独立的 callback。我们可以通过构造 Watcher 类来实现，不同的 Watcher 实例存储不同 key 变化后的 callback。
+3. 由于我们之前已经设置过，让 Observer 监听属性的变化，所以我们可以在对应 key 变化后调用对应 Watcher 的 callback。
+4. 要做到3，前提是 Observer 记录着所有 watcher
 
 
 
 
 
-
-
-
-
-
+最小开放原则
