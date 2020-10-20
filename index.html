@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>simple-vue</title>
+</head>
+<style>
+    #app {
+        text-align: center;
+    }
+</style>
+<body>
+<div id="app">
+    <div>
+        <h3>hh</h3>
+    </div>
+    <h2>{{title}}</h2>
+    <h1>{{name}}</h1>
+    <div></div>
+</div>
+</body>
+<script type="text/javascript">
+    // 去查询root节点下要做数据绑定的节点
+    function binding(data,root) {
+        let rootNode=document.querySelector(root)
+
+        let fragment=nodeToFragment(rootNode)
+        findNode(fragment)
+        rootNode.appendChild(fragment)
+    }
+
+
+    function findNode(rootNode) {
+        Array.from(rootNode.childNodes).map(node=>{
+
+            const reg = /\{\{\s*(.*?)\s*\}\}/;
+            const text = node.textContent;
+
+            // node 的后代节点有需要绑定的部分，才继续遍历，这实际上是做了一个剪枝
+            if(reg.test(text)&&node.childNodes.length>0){
+                findNode(node)
+            }
+
+            if(node.nodeType===3&&reg.test(text)){
+                const key=reg.exec(text)[1]
+                node.textContent=data[key]
+            }
+        })
+    }
+
+    function nodeToFragment(el) {
+        let fragment = document.createDocumentFragment();
+        let child = el.firstChild;
+        while (child) {
+            // 将Dom元素移入fragment中
+            fragment.appendChild(child);
+            child = el.firstChild
+        }
+        return fragment;
+    }
+
+
+    const data={
+        title:'newHeadline',
+        name:'libai'
+    }
+
+    const root="#app"
+
+    binding(data,root)
+</script>
+</html>

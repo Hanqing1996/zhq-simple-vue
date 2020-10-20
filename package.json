@@ -1,0 +1,14 @@
+{
+  "name": "zhq-simple-vue",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Hanqing1996/zhq-simple-vue.git",
+  "author": "Hanqing1996 <zhq199622@163.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "parcel": "^1.12.4"
+  },
+  "scripts": {
+    "start": "npx parcel index.html"
+  }
+}
