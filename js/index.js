@@ -6,4 +6,5 @@ const data={
 
 const root="#app"
 new Compile(data,root)
-data.name='dufu'
+data.title='changedTitle'
+data.name='zhangfei'

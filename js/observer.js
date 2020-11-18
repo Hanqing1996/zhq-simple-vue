@@ -1,15 +1,15 @@
 import Watcher from "./watcher";
+import Dep from "./dep";
 
 export default class Observer {
     constructor(data) {
         // 存储数据模板对应 key 的各个 watcher
         this.data=data
-        this.watchers=undefined
         this.init(this.data)
     }
     
     init(data){
-        this.watchers=this.watchers||[]
+        let dep=new Dep()
         Object.keys(data).map(key=>{
             // value 作为 get,set 的闭包内变量。
             let value=data[key]
@@ -21,26 +21,23 @@ export default class Observer {
             let that=this
             Object.defineProperty(data,key,{
                 get() {
-                    if(Watcher.target){
-                        that.watchers.push(Watcher.target)
-                        Watcher.target=null
-                    }
+                    
+                    Dep.target && dep.addSub(Dep.target)
+                    
                     console.log(`oh,you read the value of ${key}`);
                     return value
                 },
                 set(newValue){
                     console.log(`oh,you change the value of ${key} to ${newValue}`);
-    
-    
-                    console.log(that.watchers);
+                    console.log(dep.subs);
     
                     const oldValue=value
                     value=newValue
-
-                    that.watchers.map(watcher=>{
-                        watcher.update(key,oldValue,newValue)
-                    })
     
+                    // dep.subs.map(watcher=>{
+                    //     watcher.update(key,oldValue,newValue)
+                    // })
+                    dep.notify(key,oldValue,value)
                 },
                 enumerable : true,
                 configurable : true
