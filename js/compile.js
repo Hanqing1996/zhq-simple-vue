@@ -22,6 +22,8 @@ export default class Compile{
     
     // 递归查找带有{{}}的子节点
     findNode(rootNode){
+        let that=this
+        
         Array.from(rootNode.childNodes).map(node=>{
         
             const reg = /\{\{\s*(.*?)\s*\}\}/;
@@ -36,7 +38,7 @@ export default class Compile{
                 const key=reg.exec(text)[1]
                 node.textContent=this.data[key] // 触发 Observer 监听对象的 get 函数
     
-                new Watcher(node,key,(newValue)=>{
+                new Watcher(that.data,key,(newValue)=>{
                     console.log(`callback for ${key} is executing`)
                     console.log(node);
                     node.textContent=newValue

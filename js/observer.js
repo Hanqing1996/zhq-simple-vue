@@ -30,7 +30,10 @@ export default class Observer {
                 },
                 set(newValue){
                     console.log(`oh,you change the value of ${key} to ${newValue}`);
-                    
+    
+    
+                    console.log(that.watchers);
+    
                     const oldValue=value
                     value=newValue
 
